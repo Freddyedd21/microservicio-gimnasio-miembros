@@ -35,6 +35,16 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(error);
     }
 
+    @ExceptionHandler(TrainerServiceException.class)
+    public ResponseEntity<Map<String, Object>> handleTrainerServiceException(TrainerServiceException ex) {
+        Map<String, Object> error = new HashMap<>();
+        error.put("status", HttpStatus.SERVICE_UNAVAILABLE.value());
+        error.put("error", "Trainer Service Unavailable");
+        error.put("message", ex.getMessage());
+        error.put("timestamp", LocalDateTime.now().toString());
+        return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(error);
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, Object>> handleGenericException(Exception ex) {
         Map<String, Object> error = new HashMap<>();
