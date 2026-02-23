@@ -17,4 +17,5 @@ public class Miembro {
     private String nombre;
     private String email;
     private LocalDate fechaInscripcion;
+    private Long entrenadorPersonalId;    // Referencia al entrenador personal asignado
 }
