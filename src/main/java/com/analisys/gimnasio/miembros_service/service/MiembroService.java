@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service; 
 
+import com.analisys.gimnasio.miembros_service.messaging.publisher.MiembroEventsPublisher;
 import com.analisys.gimnasio.miembros_service.model.Miembro;
 import  com.analisys.gimnasio.miembros_service.repository.MiembroRepository;
 
@@ -12,13 +13,19 @@ public class MiembroService {
     @Autowired
     private MiembroRepository miembroRepository;
 
+    @Autowired
+    private MiembroEventsPublisher miembroEventsPublisher;
+
     public Miembro agregarMiembro(Miembro miembro) {
         for (Miembro m : miembroRepository.findAll()) {
             if (m.getEmail().equalsIgnoreCase(miembro.getEmail())) {
                 throw new IllegalArgumentException("El email ya está registrado");
             }
         }
-        return miembroRepository.save(miembro);
+        Miembro guardado = miembroRepository.save(miembro);
+        miembroEventsPublisher.publishMiembroCreado(guardado);
+        miembroEventsPublisher.publishInscripcionCreada(guardado);
+        return guardado;
     }
 
     public List<Miembro> obtenerMiembros() {
