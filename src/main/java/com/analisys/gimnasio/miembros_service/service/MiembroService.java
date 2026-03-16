@@ -24,6 +24,7 @@ public class MiembroService {
         }
         Miembro guardado = miembroRepository.save(miembro);
         miembroEventsPublisher.publishMiembroCreado(guardado);
+        miembroEventsPublisher.publishInscripcionCreada(guardado);
         return guardado;
     }
 

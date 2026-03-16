@@ -13,4 +13,9 @@ public class NoOpMiembroEventsPublisher implements MiembroEventsPublisher {
     public void publishMiembroCreado(Miembro miembro) {
         // Intencionalmente vacío: usado para tests o cuando se deshabilita RabbitMQ.
     }
+
+    @Override
+    public void publishInscripcionCreada(Miembro miembro) {
+        // Intencionalmente vacío: usado para tests o cuando se deshabilita RabbitMQ.
+    }
 }
